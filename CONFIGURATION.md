@@ -53,6 +53,8 @@ Currently, I only reccomend setting one container environment variable, TZ, as t
 
 **set_exif_datetime**: Write the DateTimeOriginal exif tag from file creation date. Warning: Setting this option will alter the local file and result in the original being downloaded again, with a de-duplication suffix added to the name. Default: false.
 
+**xmp_sidecar**: Set this to **true** to save XMP metadata sidecars for photos and videos. XMP sidecars are separate files containing metadata. Default: false.
+
 **auto_delete**: Scans the "Recently Deleted" folder and deletes any files found in there. (If you restore the photo in iCloud, it will be downloaded again). Default: false.
 
 **delete_after_download**: After a file is successfully downloaded it is moved to the Recenlty Deleted folder. This configuration option cannot be used in conjunction with **auto_delete**. Default: false.
@@ -73,7 +75,7 @@ Currently, I only reccomend setting one container environment variable, TZ, as t
 
 **until_found**: Set this to an integer number to only download the most recently added photos, until *n* number of previously downloaded consecutive photos are found. Default: download all photos.
 
-**photo_album**: Set this to a comma delimited field to download photos from a photo album. Please note, if downloading from multiple albums, you need to enclose them in quotes in your /config/icloudpd.conf file e.g. photo_album="one,two,three and four" will download photos from three albums named "one", "two" and "three and four". When downloading photo albums, the folder structure will be set to be the name of the album eg "/home/boredazfcuk/iCloud/one/IMG_0001.HEIC", "/home/boredazfcuk/iCloud/two/IMG_0002.HEIC" and "/home/boredazfcuk/iCloud/three and four/IMG_0003.HEIC". Set  **photo_album="all albums"** in your configuration file /config/icloudpd.conf to download all albums. Please note: Due to a limitation in an upstream package, downloading from multiple albums will trigger multiple download runs. When Apple detect this, they may force a multifactor re-authentication. 
+**photo_album**: Set this to a comma delimited field to download photos from a photo album. Please note, if downloading from multiple albums, you need to enclose them in quotes in your /config/icloudpd.conf file e.g. photo_album="one,two,three and four" will download photos from three albums named "one", "two" and "three and four". When downloading photo albums, the folder structure will be set to be the name of the album eg "/home/boredazfcuk/iCloud/one/IMG_0001.HEIC", "/home/boredazfcuk/iCloud/two/IMG_0002.HEIC" and "/home/boredazfcuk/iCloud/three and four/IMG_0003.HEIC". Set  **photo_album="all albums"** in your configuration file /config/icloudpd.conf to download all albums. Please note: Due to a limitation in an upstream package, downloading from multiple albums will trigger multiple download runs. When Apple detect this, they may force a multifactor re-authentication.
 
 **photo_library**: Set this to a comma delimited field to download photos from a shared library. Please note, if downloading from multiple libraries, you need to enclose them in quotes in your /config/icloudpd.conf file e.g. photo_library="one,two,three and four" will download photos from three libraries named "one", "two" and "three and four". When downloading photo libraries, the folder structure will be set to be the name of the library eg "/home/boredazfcuk/iCloud/one/IMG_0001.HEIC", "/home/boredazfcuk/iCloud/two/IMG_0002.HEIC" and "/home/boredazfcuk/iCloud/three and four/IMG_0003.HEIC". Set  **photo_library="all libraries"** in your configuration file /config/icloudpd.conf to download all libraries. Please note: Due to a limitation in an upstream package, downloading from multiple libraries will trigger multiple download runs, and Apple may force a multifactor re-authentication.
 
@@ -114,7 +116,7 @@ Currently, I only reccomend setting one container environment variable, TZ, as t
 **file_match_policy**: Policy to identify existing files and de-duplicate. **name-size-dedup-with-suffix** appends file size to deduplicate. **name-id7**
 adds asset id from iCloud to all file names and does not need de-duplication. Default: name-size-dedup-with-suffix.
 
-**video_path**: 
+**video_path**:
 
 # NEXTCLOUD CONFIGURATION ITEMS
 
@@ -136,7 +138,7 @@ adds asset id from iCloud to all file names and does not need de-duplication. De
 
 **notification_title**: This allows you to change the title which is sent on the notifications. This variable will default to **boredazfcuk/iCloudPD**.
 
-**silent_file_notifications** will send low priority messages for file downloads and file deletions so that notifications are sent, but you don't get alerted with sounds/vibrations. Currently only supported for 
+**silent_file_notifications** will send low priority messages for file downloads and file deletions so that notifications are sent, but you don't get alerted with sounds/vibrations. Currently only supported for
 
 **prowl_api_key**: Mandatory if notification_type set to 'Prowl'. This is the API key for your account as generated by the Prowl website.
 

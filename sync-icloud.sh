@@ -12,11 +12,11 @@ initialise_script()
    log_info "Python version: $(cat /tmp/icloudpd/python_version)"
    log_info "icloud-photos-downloader version: $(cat /tmp/icloudpd/icloudpd_version)"
    lan_ip="$(hostname -i)"
-   log_debug "LAN IP Address: ${lan_ip}"   
+   log_debug "LAN IP Address: ${lan_ip}"
    log_debug "Default gateway: $(ip route | grep default | awk '{print $3}')"
    log_debug "DNS server: $(grep nameserver /etc/resolv.conf | awk '{print $2}')"
    log_info "Loading configuration from: ${config_file}"
-   source "${config_file}"  
+   source "${config_file}"
    apple_id="$(echo -n "${apple_id}" | tr '[:upper:]' '[:lower:]')"
    apple_id_prefix="${apple_id%%@*}"
    apple_id_suffix="${apple_id##*@}"
@@ -1523,7 +1523,7 @@ sideways_copy_all_videos()
    # Copy videos sideways to alternate directory
    local video_list sorted_video_list
    log_info "Sideways copy all videos to alternate directory..."
-   if [ -z "${video_path}" ] 
+   if [ -z "${video_path}" ]
    then
       log_error "Video path is not configured. Cannot sideways copy all videos. Exiting."
       sleep 120
@@ -1580,7 +1580,7 @@ sideways_copy_videos()
    # Copy videos sideways to alternate directory
    local video_list sorted_video_list
    log_info "Sideways copy videos to alternate directory..."
-   if [ -z "${video_path}" ] 
+   if [ -z "${video_path}" ]
    then
       log_error " - Video path is not configured. Cannot sideways copy all videos. Exiting."
       sleep 120
@@ -1642,7 +1642,7 @@ synology_photos_app_fix()
       log_debug "Create empty date/time reference file ${heic_file%.*}.TMP"
       run_as "touch --reference=\"${heic_file}\" \"${heic_file%.*}.TMP\""
       log_debug "Set time stamp for ${heic_file} to current: $(date)"
-      run_as "touch \"${heic_file}\"" 
+      run_as "touch \"${heic_file}\""
       log_debug "Set time stamp for ${heic_file} to original: $(date -r "${heic_file%.*}.TMP" +"%a %b %e %T %Y")"
       run_as "touch --reference=\"${heic_file%.*}.TMP\" \"${heic_file}\""
       log_debug "Removing temporary file ${heic_file%.*}.TMP"
@@ -2239,6 +2239,10 @@ command_line_builder()
    if [ "${skip_created_before}" ]
    then
       command_line="${command_line} --skip-created-before ${skip_created_before}"
+   fi
+   if [ "${xmp_sidecar}" = true ]
+   then
+      command_line="${command_line} --xmp-sidecar"
    fi
 }
 

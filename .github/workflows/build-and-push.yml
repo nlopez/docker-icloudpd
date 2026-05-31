@@ -1,3 +1,6 @@
+# NOTE: This workflow runs ONLY on the nlopez fork.
+# Upstream workflows (boredazfcuk/docker-icloudpd) are completely isolated
+# and CANNOT be triggered by pushes to this fork.
 name: Build and Push Docker Image
 
 on:

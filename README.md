@@ -13,9 +13,21 @@ Just send a message to the Telegram chat and the container will pick that up and
 # Also with built-in Nextcloud upload/delete!
 Just configure the Nextcloud settings and every file downloaded will be uploaded to a nextcloud server. It will also upload the JPGs it creates from HSIC file conversions. It will also sync deletes too.
 
+## Docker Images
+
+Multi-arch images (linux/386, amd64, arm64, arm/v7, arm/v6) are automatically built and published to
+[GitHub Container Registry](https://github.com/nlopez/docker-icloudpd/pkgs/container/icloudpd) on every push to `master`:
+
+```
+docker pull ghcr.io/nlopez/icloudpd:latest
+docker pull ghcr.io/nlopez/icloudpd:1.0.<build_version>
+```
+
 ## CONFIGURING ICLOUDPD
 
-The README on Dockerhub has a hard limit of 25,000 characters, and I've hit this limit too many times now. All in all, I'm up at about 37k characters for the documentation, so this README is just a placeholder. Please see CONFIGURATION.md for info on how to configure this container. It is available here: https://github.com/boredazfcuk/docker-icloudpd/blob/master/CONFIGURATION.md
+The README on GitHub Container Registry is quite long, so this README is just a placeholder.
+Please see CONFIGURATION.md for info on how to configure this container.
+It is available here: https://github.com/nlopez/docker-icloudpd/blob/master/CONFIGURATION.md
 
 Litecoin: LfmogjcqJXHnvqGLTYri5M8BofqqXQttk4
 

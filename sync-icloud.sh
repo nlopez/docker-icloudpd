@@ -1388,6 +1388,25 @@ nextcloud_delete()
             echo "Unexpected response: ${curl_response}"
          fi
       fi
+      # Also check for XMP sidecar file if xmp_sidecar was used
+      xmp_destination="${nextcloud_destination}.xmp"
+      log_debug "Checking file path: ${xmp_destination}"
+      curl_response="$(curl --silent --show-error --location --head --user "${nextcloud_username}:${nextcloud_password}" "${xmp_destination}" --output /dev/null --write-out "%{http_code}")"
+      if [ "${curl_response}" -ge 200 ] && [ "${curl_response}" -le 200 ]
+      then
+         log_info_n " - XMP file exists, deleting"
+         if curl --silent --show-error --location --request DELETE --user "${nextcloud_username}:${nextcloud_password}" --output /dev/null "${xmp_destination}"
+         then
+            echo "Success"
+         else
+            echo "Error: $?"
+         fi
+      elif [ "${curl_response}" -eq 404 ]
+      then
+         log_debug "XMP file not found: ${xmp_destination}"
+      else
+         log_debug "Unexpected response for XMP: ${curl_response}"
+      fi
    done
    IFS="${OLDIFS}"
 }
@@ -1831,7 +1850,7 @@ correct_jpeg_timestamps()
 remove_recently_deleted_accompanying_files()
 {
    IFS=$'\n'
-   log_info "Deleting 'Recently Deleted' accompanying files (.JPG/_HEVC.MOV)..."
+   log_info "Deleting 'Recently Deleted' accompanying files (.JPG/_HEVC.MOV/.xmp)..."
    for heic_file in $(grep "Deleted /" /tmp/icloudpd/icloudpd_sync.log | grep -i ".HEIC" | cut --delimiter " " --fields 9-)
    do
       # Remove trailing exlaimation mark
@@ -1862,6 +1881,13 @@ remove_recently_deleted_accompanying_files()
       then
          log_debug "Deleting ${heic_file%.*}_hevc.mov"
          rm -f "${heic_file%.*}_hevc.mov"
+      fi
+      # Also remove XMP sidecar file if xmp_sidecar was used
+      xmp_file="${heic_file}.xmp"
+      if [ -f "${xmp_file}" ]
+      then
+         log_debug "Deleting ${xmp_file}"
+         rm -f "${xmp_file}"
       fi
    done
    log_info "Deleting 'Recently Deleted' accompanying files complete"

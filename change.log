@@ -1,3 +1,29 @@
+04/05/2026
+
+ - Merged PR-941 from seeyabye. This version fixes the Apple modal MFA codes and also works for SMS codes.
+ - Set the Expect script to truncate the expect_input.txt file after reading. Noticed that thre was a multi-line variable being created as the main script was appending. Truncate is being used as I'm sure I used to overwrite the file previoulsy and is used to lead to inotify issues.
+
+23/04/2026
+
+ - Got Claude to re-create the build docker file to build form source and include patch. Untested. Figure other people will give it a go and let me know. Worked on my local build, didn't work in the GitHub action workflow. hmmm.
+ 
+07/03/2026
+
+ - Added a check to make sure the /config volume has more than 1MB on it so that it can store the cookies it downloads and 1GB on the download_path volume, coz it's prob gonna fill up real quick with only that amount available
+
+02/03/2026
+
+ - Added a bunch of -n to if statements to validate that the variables are non-zero, so not configured but empty. Should guard against weird stuff and also prevent some stuff from launching when it's not actualy set.
+ 
+28/02/2026
+
+ - The logic to create the python keyring directory wasn't early enough in the script which was causing the run_as command which checks the permissions to fail.
+
+27/02/2026
+
+ - Coding has gone to shit recently. Lots of silly mistakes. Message up the sendmessage script and didn't notice for a good while. Have now implemented a shellcheck failsafe to prevent building containers with borked scripts
+ - Reverted back to my original expect script. I just can't be bothered faffing about trying to get the AI "improvements" working right now. I'll re-visit it when I have more time.
+
 23/02/2026
 
  - Merged a PR from pewter77 which preserves permissions on the config file in case they have had custom permissions set

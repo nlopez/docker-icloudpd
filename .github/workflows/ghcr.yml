@@ -45,6 +45,6 @@ jobs:
           file: icloudpd.dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/icloudpd:${{ steps.version.outputs.tag }}
+          tags: ghcr.io/${{ github.repository }}:${{ steps.version.outputs.tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

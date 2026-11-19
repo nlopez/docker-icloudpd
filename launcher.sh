@@ -142,7 +142,7 @@ disable_notifications()
 
 ##### Start Script #####
 log_info "Initialising container..."
-export config_file="/config/icloudpd.conf"
+export config_file="${config_file:-/config/icloudpd.conf}"
 
 minimum_space_remaining='1024'
 drive_space_remaining="$(df | grep /config | awk '{print $4}')"

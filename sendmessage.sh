@@ -60,7 +60,7 @@ show_variables()
    echo "notification_url: ${notification_url}"
 }
 
-config_file="/config/icloudpd.conf"
+config_file="${config_file:-/config/icloudpd.conf}"
 user="$(grep "^user=" ${config_file} | awk -F= '{print $2}')"
 apple_id="$(grep "^apple_id=" ${config_file} | awk -F= '{print $2}')"
 telegram_chat_id="$(grep "^telegram_chat_id=" ${config_file} | awk -F= '{print $2}')"

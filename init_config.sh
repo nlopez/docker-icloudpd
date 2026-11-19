@@ -1,20 +1,36 @@
 #!/bin/ash
 
+# Rewrites an existing "name=value" line in the temporary config file
+override_variable()
+{
+   __override_name="$1" __override_value="$2" awk '
+      index($0, ENVIRON["__override_name"] "=") == 1 { print ENVIRON["__override_name"] "=" ENVIRON["__override_value"]; next }
+      { print }' "${temp_file}" > "${temp_file}.new" && mv "${temp_file}.new" "${temp_file}"
+}
+
+# An environment variable named like the setting always wins over the config
+# file, even when it is set to an empty string. Without one, a value already in
+# the config file is kept, and a missing one is filled from the default.
 write_variable()
 {
    variable="$1"
    default="$2"
 
+   # Get ENV override (ash-safe indirect expansion)
+   eval env_set="\${$variable+x}"
+   eval env_value="\${$variable}"
+
    case " $found_variables " in
       *" $variable "*)
+         if [ -n "${env_set}" ]
+         then
+            override_variable "${variable}" "${env_value}"
+         fi
          return
          ;;
    esac
 
-   # Get ENV override (ash-safe indirect expansion)
-   eval env_value="\${$variable}"
-
-   if [ -n "${env_value}" ]
+   if [ -n "${env_set}" ]
    then
       value="${env_value}"
    elif [ -n "${default}" ]
@@ -28,7 +44,7 @@ write_variable()
 }
 
 ##### Start Script #####
-config_file="/config/icloudpd.conf"
+config_file="${config_file:-/config/icloudpd.conf}"
 
 # Move from synchronisation_interval to download_interval and from synchronisation_delay to download_delay
 if [ -f "${config_file}" ]

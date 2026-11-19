@@ -12,9 +12,9 @@ run_as()
    fi
 }
 
-user="$(grep "^user=" /config/icloudpd.conf | awk -F= '{print $2}')"
-apple_id="$(grep apple_id /config/icloudpd.conf | awk -F= '{print $2}')"
-auth_china="$(grep auth_china /config/icloudpd.conf | awk -F= '{print $2}')"
+user="$(grep "^user=" ${config_file:-/config/icloudpd.conf} | awk -F= '{print $2}')"
+apple_id="$(grep apple_id ${config_file:-/config/icloudpd.conf} | awk -F= '{print $2}')"
+auth_china="$(grep auth_china ${config_file:-/config/icloudpd.conf} | awk -F= '{print $2}')"
 cookie_file="$(echo -n "${apple_id//[^a-z0-9_]/}")"
 auth_domain="com"
 

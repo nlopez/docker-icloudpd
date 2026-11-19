@@ -12,7 +12,7 @@ for script in /etc/profile.d/*.sh ; do
    fi
 done
 
-dl_path="$(grep "^download_path=" /config/icloudpd.conf | awk '{print $2}')"
+dl_path="$(grep "^download_path=" ${config_file:-/config/icloudpd.conf} | awk '{print $2}')"
 alias bins='cd /usr/local/bin'
 alias opt='cd /opt'
 alias config='cd /config'
@@ -36,7 +36,7 @@ alias remove='apk del'
 alias update='apk update'
 alias listupdates='apk list --upgradable'
 alias upgrade='apk update && apk upgrade'
-alias editconfig='nano /config/icloudpd.conf'
+alias editconfig='nano ${config_file:-/config/icloudpd.conf}'
 alias whatsmyip='wget -qO- icanhazip.com'
 alias innit='/usr/local/bin/sync-icloud.sh --init'
 

@@ -1,6 +1,6 @@
 #!/bin/ash
 
-source "/config/icloudpd.conf"
+source "${config_file:-/config/icloudpd.conf}"
 
 if [ -f "/tmp/icloudpd/awaiting_reauthentication" ]
 then

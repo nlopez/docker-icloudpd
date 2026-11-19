@@ -6,6 +6,11 @@ Currently, I only reccomend setting one container environment variable, TZ, as t
 
 **TZ**: Sets the local timezone and is required to calculate timestamps. Default: 'UTC'. If you are unsure of your timezone, the list can be found here: https://nodatime.org/TimeZones. The value you need to set is listed in the "Zone ID" column of the table.
 
+## Overriding the configuration file with environment variables
+This fork lets environment variables win over the configuration file. On every start, any environment variable named after a configuration item below (for example `single_pass`, `skip_download` or `until_found`) is written into the configuration file, replacing the value already there. A variable set to an empty string clears the item. Items without a matching environment variable keep their value from the file, or get the default if they are new.
+
+**config_file**: Path of the configuration file, so that several containers can share one `/config` volume and each use its own file. Default: '/config/icloudpd.conf'. The cookie, session and keyring files are always read from `/config`, so containers sharing the volume also share the Apple ID login.
+
 ## CONFIGURATION ITEMS
 **apple_id**: This is the Apple ID that will be used when downloading files. This option is mandatory
 

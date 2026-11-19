@@ -53,8 +53,9 @@ if [ "${changed}" -gt 0 ]
 then
    mkdir -p "${xmp_pending_dir}"
    cat "${changed_list}" >> "${xmp_pending_dir}/pending.list"
-   chmod 755 "${xmp_pending_dir}"
-   chmod 644 "${xmp_pending_dir}/pending.list"
+   # The consumer runs as a different user and renames pending.list.
+   chmod 777 "${xmp_pending_dir}"
+   chmod 666 "${xmp_pending_dir}/pending.list"
 fi
 mv "${new_manifest}" "${xmp_manifest}"
 

@@ -11,6 +11,9 @@ This fork lets environment variables win over the configuration file. On every s
 
 **config_file**: Path of the configuration file, so that several containers can share one `/config` volume and each use its own file. Default: '/config/icloudpd.conf'. The cookie, session and keyring files are always read from `/config`, so containers sharing the volume also share the Apple ID login.
 
+## xmp-changes.sh
+`xmp-changes.sh` finds the XMP sidecars whose content changed, for consumers that react to metadata edits. icloudpd rewrites sidecars with identical content on every pass, so mtimes can't be used. The script hashes every `.xmp` under `download_path`, compares with the manifest from the previous run, and appends the paths (relative to `download_path`) of changed or new sidecars to `pending.list`. The first run only records a baseline. Run it after a pass, for example as a second init container. Settings, as environment variables: **download_path** (default `/home/user/iCloud`), **xmp_manifest** (default `/config/xmp-manifest.sha256`) and **xmp_pending_dir** (default `<download_path>/.xmp-changes`).
+
 ## CONFIGURATION ITEMS
 **apple_id**: This is the Apple ID that will be used when downloading files. This option is mandatory
 
